@@ -1,0 +1,277 @@
+.success-page {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 55px 24px 80px;
+  background: #f7f7f5;
+}
+
+.success-container {
+  width: 100%;
+  max-width: 850px;
+}
+
+.success-card {
+  padding: 65px 70px;
+  border: 1px solid #e2e2df;
+  border-radius: 28px;
+  background: #fff;
+  text-align: center;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.05);
+}
+
+.success-icon {
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 25px;
+  border-radius: 50%;
+  background: #111;
+}
+
+.success-icon span {
+  color: #fff;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.success-eyebrow {
+  display: block;
+  margin-bottom: 12px;
+  color: #888;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.success-card h1 {
+  max-width: 600px;
+  margin: 0 auto;
+  color: #111;
+  font-size: clamp(38px, 6vw, 62px);
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+
+.success-description {
+  max-width: 500px;
+  margin: 20px auto 0;
+  color: #777;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.order-confirmation-box {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 40px;
+  overflow: hidden;
+  border: 1px solid #e4e4e1;
+  border-radius: 15px;
+  background: #e4e4e1;
+  text-align: left;
+}
+
+.order-confirmation-box > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  background: #f8f8f6;
+}
+
+.order-confirmation-box span {
+  color: #999;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.order-confirmation-box strong {
+  color: #222;
+  font-size: 14px;
+}
+
+.status-confirmed {
+  color: #16733a !important;
+  text-transform: capitalize;
+}
+
+.success-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.view-order-button,
+.shop-more-button {
+  min-height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  padding: 0 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 700;
+  transition: 0.25s ease;
+}
+
+.view-order-button {
+  border: 1px solid #111;
+  background: #111;
+  color: #fff;
+}
+
+.view-order-button span {
+  font-size: 17px;
+}
+
+.view-order-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+}
+
+.shop-more-button {
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333;
+}
+
+.shop-more-button:hover {
+  border-color: #111;
+  color: #111;
+}
+
+.success-message {
+  display: flex;
+  align-items: flex-start;
+  max-width: 500px;
+  margin: 35px auto 0;
+  padding: 17px;
+  gap: 12px;
+  border-radius: 12px;
+  background: #f3f3f0;
+  text-align: left;
+}
+
+.message-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #111;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.success-message strong {
+  display: block;
+  color: #333;
+  font-size: 11px;
+}
+
+.success-message p {
+  margin: 5px 0 0;
+  color: #888;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.success-footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-top: 25px;
+  overflow: hidden;
+  border: 1px solid #e2e2df;
+  border-radius: 15px;
+  background: #e2e2df;
+}
+
+.success-footer > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 18px;
+  background: #fff;
+}
+
+.success-footer span {
+  color: #aaa;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.success-footer strong {
+  color: #555;
+  font-size: 10px;
+}
+
+@media (max-width: 650px) {
+  .success-page {
+    padding: 35px 15px 55px;
+  }
+
+  .success-card {
+    padding: 45px 22px;
+    border-radius: 20px;
+  }
+
+  .success-icon {
+    width: 65px;
+    height: 65px;
+  }
+
+  .success-icon span {
+    font-size: 25px;
+  }
+
+  .success-card h1 {
+    font-size: 40px;
+  }
+
+  .order-confirmation-box {
+    grid-template-columns: 1fr;
+  }
+
+  .order-confirmation-box > div {
+    padding: 15px 17px;
+    border-bottom: 1px solid #e4e4e1;
+  }
+
+  .order-confirmation-box > div:last-child {
+    border-bottom: none;
+  }
+
+  .success-actions {
+    flex-direction: column;
+  }
+
+  .view-order-button,
+  .shop-more-button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .success-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .success-footer > div {
+    justify-content: flex-start;
+    padding: 14px 18px;
+  }
+}
