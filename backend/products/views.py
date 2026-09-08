@@ -1,8 +1,13 @@
+import logging
+
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_GET
 
 from .models import Category, Product
+
+
+logger = logging.getLogger(__name__)
 
 
 def product_to_dict(product, request=None):
@@ -37,64 +42,77 @@ def product_to_dict(product, request=None):
 
 @require_GET
 def product_list(request):
-    search = request.GET.get(
-        "search",
-        "",
-    ).strip()
+    try:
+        search = request.GET.get(
+            "search",
+            "",
+        ).strip()
 
-    category = request.GET.get(
-        "category",
-        "",
-    ).strip()
+        category = request.GET.get(
+            "category",
+            "",
+        ).strip()
 
-    products = (
-        Product.objects
-        .filter(is_active=True)
-        .select_related("category")
-        .order_by("id")
-    )
-
-    # -----------------------------
-    # SEARCH
-    # -----------------------------
-
-    if search:
-        products = products.filter(
-            name__icontains=search
-        ) | products.filter(
-            description__icontains=search
+        products = (
+            Product.objects
+            .filter(is_active=True)
+            .select_related("category")
+            .order_by("id")
         )
 
-        products = products.distinct()
+        # -----------------------------
+        # SEARCH
+        # -----------------------------
 
-    # -----------------------------
-    # CATEGORY FILTER
-    # -----------------------------
-
-    if category:
-        # Support category ID
-        if category.isdigit():
+        if search:
             products = products.filter(
-                category_id=int(category)
+                name__icontains=search
+            ) | products.filter(
+                description__icontains=search
             )
 
-        # Support category name
-        else:
-            products = products.filter(
-                category__name__iexact=category
-            )
+            products = products.distinct()
 
-    data = [
-        product_to_dict(
-            product,
-            request,
+        # -----------------------------
+        # CATEGORY FILTER
+        # -----------------------------
+
+        if category:
+            if category.isdigit():
+                products = products.filter(
+                    category_id=int(category)
+                )
+            else:
+                products = products.filter(
+                    category__name__iexact=category
+                )
+
+        data = [
+            product_to_dict(
+                product,
+                request,
+            )
+            for product in products
+        ]
+
+        return JsonResponse({
+            "products": data,
+        })
+
+    except Exception:
+        logger.exception(
+            "PRODUCT LIST ERROR - /products/"
         )
-        for product in products
-    ]
 
-    return JsonResponse({
-        "products": data,
-    })
+        return JsonResponse(
+            {
+                "error": "Internal server error.",
+                "message": (
+                    "An error occurred while loading products."
+                ),
+            },
+            status=500,
+        )
 
 
 @require_GET
