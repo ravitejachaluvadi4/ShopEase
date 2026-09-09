@@ -20,8 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # =========================================
 # SECURITY
 # =========================================
-SECRET_KEY = os.environ.get("SECRET_KEY")
 
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = os.environ.get(
     "DEBUG",
@@ -41,7 +41,7 @@ ALLOWED_HOSTS = [
 
 
 # =========================================
-# CSRF
+# FRONTEND URL
 # =========================================
 
 FRONTEND_URL = os.environ.get(
@@ -49,6 +49,21 @@ FRONTEND_URL = os.environ.get(
     "http://localhost:5173",
 ).rstrip("/")
 
+
+# =========================================
+# CORS
+# =========================================
+
+CORS_ALLOWED_ORIGINS = [
+    FRONTEND_URL,
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+
+# =========================================
+# CSRF
+# =========================================
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
@@ -61,13 +76,19 @@ if FRONTEND_URL.startswith("https://"):
     )
 
 
+# =========================================
+# COOKIES
+# =========================================
+
 CSRF_COOKIE_HTTPONLY = False
 
 if DEBUG:
     CSRF_COOKIE_SECURE = False
     SESSION_COOKIE_SECURE = False
+
     CSRF_COOKIE_SAMESITE = "Lax"
     SESSION_COOKIE_SAMESITE = "Lax"
+
 else:
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
@@ -90,6 +111,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+    # Third-party apps
+    "corsheaders",
+
+    # Project apps
     "accounts",
     "products",
     "cart",
@@ -104,7 +129,12 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+
     "django.contrib.sessions.middleware.SessionMiddleware",
+
+    # CORS middleware must be before CommonMiddleware
+    "corsheaders.middleware.CorsMiddleware",
+
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -157,6 +187,7 @@ DATABASE_URL = os.environ.get(
 )
 
 if DATABASE_URL:
+
     DATABASES = {
         "default": dj_database_url.parse(
             DATABASE_URL,
@@ -164,7 +195,9 @@ if DATABASE_URL:
             conn_health_checks=True,
         )
     }
+
 else:
+
     # Local development
     DATABASES = {
         "default": {
@@ -186,14 +219,17 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME":
             "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
+
     {
         "NAME":
             "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
+
     {
         "NAME":
             "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
+
     {
         "NAME":
             "django.contrib.auth.password_validation.NumericPasswordValidator",
