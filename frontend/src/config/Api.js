@@ -1,4 +1,5 @@
-export const API_BASE_URL = "";
+export const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "";
 
 const SAFE_METHODS = [
   "GET",
@@ -8,7 +9,7 @@ const SAFE_METHODS = [
 
 export async function getCsrfToken() {
   const response = await fetch(
-    "/accounts/csrf/",
+    `${API_BASE_URL}/accounts/csrf/`,
     {
       method: "GET",
       credentials: "include",
@@ -66,10 +67,13 @@ export async function apiRequest(
     );
   }
 
-  return fetch(path, {
-    ...options,
-    method,
-    credentials: "include",
-    headers,
-  });
+  return fetch(
+    `${API_BASE_URL}${path}`,
+    {
+      ...options,
+      method,
+      credentials: "include",
+      headers,
+    }
+  );
 }
